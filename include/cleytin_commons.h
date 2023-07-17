@@ -5,10 +5,11 @@
 #include "driver/gpio.h"
 #include "sdmmc_cmd.h"
 #include "driver/sdmmc_host.h"
-#include "esp_spi_flash.h"
+#include "spi_flash_mmap.h"
 #include "esp_partition.h"
 #include "esp_vfs_fat.h"
-#include "soc/rtc_wdt.h"
+#include "rtc_wdt.h"
+#include "esp_timer.h"
 
 #define CLEYTIN_GAME_ROM_ADDR 0x10000
 #define CLEYTIN_GAME_ROM_SIZE (3 * 1024 * 1024) // 3 Megabytes

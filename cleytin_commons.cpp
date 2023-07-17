@@ -34,7 +34,8 @@ sdmmc_card_t* cleytin_mount_fs() {
     esp_vfs_fat_sdmmc_mount_config_t mount_config = {
         .format_if_mount_failed = false,
         .max_files = 5,
-        .allocation_unit_size = 16 * 1024
+        .allocation_unit_size = 16 * 1024,
+        .disk_status_check_enable = false,
     };
     ESP_LOGI(LOG_TAG, "Inicializando SD Card");
     sdmmc_host_t host = SDMMC_HOST_DEFAULT();
@@ -60,10 +61,11 @@ sdmmc_card_t* cleytin_mount_fs() {
 }
 
 void cleytin_unmount_fs() {
-    if(cleytin_sd_card != NULL) {
-        esp_vfs_fat_sdmmc_unmount();
-        cleytin_sd_card = NULL;
+    if(cleytin_sd_card == NULL) {
+        return;
     }
+    esp_vfs_fat_sdcard_unmount("/sdcard", cleytin_sd_card);
+    cleytin_sd_card = NULL;
 }
 
 char *cleytin_get_root_filesystem(size_t bufferExtraSpace) {
